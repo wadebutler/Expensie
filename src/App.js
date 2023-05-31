@@ -15,12 +15,12 @@ const App = () => {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/home",
       exact: true,
       element: <Home />,
     },
     {
-      path: "/login",
+      path: "/",
       exact: true,
       element: <Login />,
     },

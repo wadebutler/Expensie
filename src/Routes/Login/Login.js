@@ -15,8 +15,12 @@ const Login = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password).then((user) => {
       setUserId(user.user.uid);
-      navigate("/");
+      navigate("/home");
     });
+  };
+
+  const handleNav = () => {
+    navigate("/create");
   };
 
   return (
@@ -27,6 +31,11 @@ const Login = () => {
       <input value={password} onChange={(e) => setPassword(e.target.value)} />
 
       <button onClick={() => handleLogin()}>Login</button>
+
+      <p>
+        don't have an account?
+        <span onClick={() => handleNav()}> Create Account</span>
+      </p>
     </div>
   );
 };

@@ -8,18 +8,18 @@ import {
 import { collection, query } from "firebase/firestore";
 import { useRecoilState } from "recoil";
 import { userIdAtom } from "../../Util/Atoms";
-import Select from "react-select";
+import ExpenseInput from "../../Components/ExpenseInput/ExpenseInput";
+import BreakDown from "../../Components/Breakdown/Breakdown";
 
 const Home = () => {
+  const [info, setInfo] = useState(null);
   const [userId, setUserId] = useRecoilState(userIdAtom);
-  const [dollarValue, setDollarValue] = useState(0);
   const firestore = useFirestore();
   const signInCheck = useSigninCheck();
   const navigate = useNavigate();
-  const userCollection = collection(firestore, userId);
+  const userCollection = userId ? collection(firestore, userId) : null;
   const userQuery = query(userCollection);
   const { status, data: userData } = useFirestoreCollectionData(userQuery);
-  const info = userData ? userData[0] : null;
 
   useEffect(() => {
     if (!userId) {
@@ -27,47 +27,39 @@ const Home = () => {
 
       if (data) {
         if (data.signedIn === false) {
-          navigate("/login");
+          navigate("/");
         }
       } else {
-        navigate("/login");
+        navigate("/");
       }
     }
-  }, []);
+  }, [userId, info]);
 
-  const handleAddExpense = () => {};
+  useEffect(() => {
+    setInfo(userData ? userData[0] : null);
+  }, [status]);
 
-  return status === "loading" ? (
+  const handleLogout = () => {
+    setUserId(null);
+    navigate("/");
+  };
+
+  return status === "loading" || info === null ? (
     <div>Loading...</div>
   ) : (
     <div>
+      <button onClick={() => handleLogout()}>Logout</button>
       <h1>Expensie</h1>
       <p>total $ spent: {info.total}</p>
 
-      <div>
-        <input
-          value={dollarValue}
-          onChange={(e) => setDollarValue(e.target.value)}
-        />
+      <ExpenseInput
+        categories={info.categories}
+        userId={userId}
+        docId={info["NO_ID_FIELD"]}
+        info={info}
+      />
 
-        <Select options={info.categories} />
-
-        <button onClick={() => handleAddExpense()}>Add</button>
-      </div>
-
-      <h2>BreakDown</h2>
-      {info.expenses.map((expense) => {
-        if (expense.length < 0) {
-          return (
-            <div>
-              <h3>{Object.keys(expense)[0]}</h3>
-              {expense?.map((item) => {
-                return <p>item</p>;
-              })}
-            </div>
-          );
-        }
-      })}
+      <BreakDown info={info} />
     </div>
   );
 };

@@ -1,43 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  useFirestore,
-  useFirestoreCollectionData,
-  useSigninCheck,
-} from "reactfire";
+import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import { collection, query } from "firebase/firestore";
 import { useRecoilState } from "recoil";
 import { userIdAtom } from "../../Util/Atoms";
 import ExpenseInput from "../../Components/ExpenseInput/ExpenseInput";
 import BreakDown from "../../Components/Breakdown/Breakdown";
+import "./Home.scss";
 
 const Home = () => {
-  const [info, setInfo] = useState(null);
   const [userId, setUserId] = useRecoilState(userIdAtom);
+  const [info, setInfo] = useState(null);
   const firestore = useFirestore();
-  const signInCheck = useSigninCheck();
   const navigate = useNavigate();
-  const userCollection = userId ? collection(firestore, userId) : null;
+  const userCollection = collection(firestore, userId ? userId : null);
   const userQuery = query(userCollection);
   const { status, data: userData } = useFirestoreCollectionData(userQuery);
 
   useEffect(() => {
-    if (!userId) {
-      const { data } = signInCheck;
-
-      if (data) {
-        if (data.signedIn === false) {
-          navigate("/");
-        }
-      } else {
-        navigate("/");
-      }
-    }
-  }, [userId, info]);
-
-  useEffect(() => {
     setInfo(userData ? userData[0] : null);
-  }, [status]);
+  }, [userId, info, status]);
 
   const handleLogout = () => {
     setUserId(null);
@@ -45,12 +27,13 @@ const Home = () => {
   };
 
   return status === "loading" || info === null ? (
-    <div>Loading...</div>
+    <div className="loading-text">Loading...</div>
   ) : (
-    <div>
-      <button onClick={() => handleLogout()}>Logout</button>
+    <div className="app-container">
+      <button className="logout-button" onClick={() => handleLogout()}>
+        Logout
+      </button>
       <h1>Expensie</h1>
-      <p>total $ spent: {info.total}</p>
 
       <ExpenseInput
         categories={info.categories}
@@ -58,6 +41,10 @@ const Home = () => {
         docId={info["NO_ID_FIELD"]}
         info={info}
       />
+
+      <h2 className="total-text">
+        Total $ spent: <span>${info.total.toFixed(2)}</span>
+      </h2>
 
       <BreakDown info={info} />
     </div>

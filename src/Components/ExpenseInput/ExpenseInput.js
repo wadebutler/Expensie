@@ -9,6 +9,10 @@ const ExpenseInput = ({ categories, userId, docId, info }) => {
   const [category, setCategory] = useState("");
   const firestore = useFirestore();
 
+  const selectStyle = {
+    control: (styles) => ({ ...styles, borderRadius: 22 }),
+  };
+
   const handleAddExpense = async () => {
     await info.expenses[category.value].push(dollarValue);
     info.total = parseFloat(info.total) + parseFloat(dollarValue);
@@ -19,8 +23,8 @@ const ExpenseInput = ({ categories, userId, docId, info }) => {
   return (
     <div className="expense-container">
       <div className="expense-form-container">
-        <>
-          <label htmlFor="dollar">add dollar value:</label>
+        <div className="expense-input-container">
+          <label htmlFor="dollar">Add dollar value:</label>
           <input
             type="number"
             id="dollar"
@@ -29,13 +33,21 @@ const ExpenseInput = ({ categories, userId, docId, info }) => {
             placeholder="100"
             onChange={(e) => setDollarValue(e.target.value)}
           />
-        </>
+        </div>
 
-        <Select options={categories} onChange={(value) => setCategory(value)} />
+        <Select
+          styles={selectStyle}
+          className="category-select"
+          placeholder={"Select Category"}
+          options={categories}
+          onChange={(value) => setCategory(value)}
+        />
       </div>
 
       <button
-        disabled={dollarValue === null || category === null ? true : false}
+        className="add-button"
+        disabled={dollarValue === "" || category === "" ? true : false}
+        aria-disabled={dollarValue === "" || category === "" ? true : false}
         onClick={() => handleAddExpense()}
       >
         Add

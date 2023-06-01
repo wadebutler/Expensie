@@ -13,8 +13,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password).then((user) => {
-      setUserId(user.user.uid);
+    signInWithEmailAndPassword(auth, email, password).then(async (user) => {
+      await setUserId(user.user.uid);
       navigate("/home");
     });
   };
@@ -27,13 +27,27 @@ const Login = () => {
     <div className="login-container">
       <h1>Login</h1>
 
-      <input value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-      <button onClick={() => handleLogin()}>Login</button>
+      <button
+        disabled={email === "" || password === "" ? true : false}
+        aria-disabled={email === "" || password === "" ? true : false}
+        onClick={() => handleLogin()}
+      >
+        Login
+      </button>
 
       <p>
-        don't have an account?
+        Don't have an account?
         <span onClick={() => handleNav()}> Create Account</span>
       </p>
     </div>

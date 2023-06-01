@@ -7,17 +7,20 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./Routes/Home/Home";
 import Login from "./Routes/Login/Login";
 import CreateAccount from "./Routes/CreateAccount/CreateAccount";
+import { useRecoilState } from "recoil";
+import { userIdAtom } from "./Util/Atoms";
 
 const App = () => {
   const app = useFirebaseApp();
   const firestore = getFirestore(app);
   const auth = getAuth(app);
+  const [userId, setUserId] = useRecoilState(userIdAtom);
 
   const router = createBrowserRouter([
     {
       path: "/home",
       exact: true,
-      element: <Home />,
+      element: userId ? <Home /> : <Login />,
     },
     {
       path: "/",

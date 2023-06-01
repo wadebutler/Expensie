@@ -1,0 +1,42 @@
+.loading-text {
+  text-align: center;
+}
+
+.app-container {
+  width: 500px;
+  margin: 0 auto;
+  position: relative;
+
+  h1 {
+    text-align: center;
+    padding: 50px 0;
+    color: orange;
+    font-size: 42px;
+  }
+
+  .logout-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 22px;
+    padding: 8px 20px;
+    margin-top: 5px;
+    background: white;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .total-text {
+    text-align: center;
+    font-size: 26px;
+    margin-top: 10px;
+
+    span {
+      color: green
+    }
+  }
+}

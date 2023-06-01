@@ -18,7 +18,7 @@ const CreateAccount = () => {
 
   const handleCreateAccount = () => {
     createUserWithEmailAndPassword(auth, email, password).then(async (user) => {
-      setUserId(user.user.uid);
+      await setUserId(user.user.uid);
       await addDoc(collection(firestore, user.user.uid), AccountCreation());
       navigate("/home");
     });
@@ -29,16 +29,22 @@ const CreateAccount = () => {
   };
 
   return (
-    <div className="create-container">
+    <div className="login-container">
       <h1>Create Account</h1>
 
       <input value={email} onChange={(e) => setEmail(e.target.value)} />
       <input value={password} onChange={(e) => setPassword(e.target.value)} />
 
-      <button onClick={() => handleCreateAccount()}>Create Account</button>
+      <button
+        disabled={email === "" || password === "" ? true : false}
+        onClick={() => handleCreateAccount()}
+        aria-disabled={email === "" || password === "" ? true : false}
+      >
+        Create Account
+      </button>
 
       <p>
-        already have an account? <span onClick={() => handleNav()}>login</span>
+        Already have an account? <span onClick={() => handleNav()}>Login</span>
       </p>
     </div>
   );

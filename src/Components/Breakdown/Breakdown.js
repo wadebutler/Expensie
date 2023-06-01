@@ -3,8 +3,8 @@ import "./Breakdown.scss";
 
 const BreakDown = ({ info }) => {
   return (
-    <>
-      <h2>BreakDown</h2>
+    <div className="breakdown-container">
+      <h2>BreakDown </h2>
       {Object.entries(info?.expenses).map((item) => {
         if (item[1].length > 0) {
           return (
@@ -20,7 +20,7 @@ const BreakDown = ({ info }) => {
           );
         }
       })}
-    </>
+    </div>
   );
 };
 

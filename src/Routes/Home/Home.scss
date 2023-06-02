@@ -7,6 +7,10 @@
   margin: 0 auto;
   position: relative;
 
+  @media (max-width: 550px) {
+    width: 95%;
+  }
+
   h1 {
     text-align: center;
     padding: 50px 0;

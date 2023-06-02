@@ -30,7 +30,8 @@ const CreateAccount = () => {
 
   return (
     <div className="login-container">
-      <h1>Create Account</h1>
+      <h1>Expensie</h1>
+      <h2>Create Account</h2>
 
       <input value={email} onChange={(e) => setEmail(e.target.value)} />
       <input value={password} onChange={(e) => setPassword(e.target.value)} />

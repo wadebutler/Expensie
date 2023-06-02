@@ -3,4 +3,22 @@
     text-align: center;
     margin: 20px 0 20px;
   }
+
+  .breakdown-list-container {
+    width: 300px;
+    margin: 0 auto;
+
+    h3 {
+      margin-left: 60px;
+    }
+
+    ul {
+      list-style-type: none;
+      margin-left: 80px;
+
+      li {
+        color: green;
+      }
+    }
+  }
 }

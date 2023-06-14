@@ -1,0 +1,23 @@
+.total-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+
+  .total-text {
+    font-size: 26px;
+    margin: 10px 10px 0px;
+  }
+  
+  .category-text {
+    font-size: 20px;
+    margin: 15px 10px 0px;
+  }
+
+  p {
+    color: green;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 10px;
+  }
+}

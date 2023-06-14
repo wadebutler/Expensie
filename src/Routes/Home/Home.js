@@ -7,6 +7,7 @@ import { userIdAtom } from "../../Util/Atoms";
 import ExpenseInput from "../../Components/ExpenseInput/ExpenseInput";
 import BreakDown from "../../Components/Breakdown/Breakdown";
 import "./Home.scss";
+import Summary from "../../Components/Summary/Summary";
 
 const Home = () => {
   const [userId, setUserId] = useRecoilState(userIdAtom);
@@ -42,11 +43,9 @@ const Home = () => {
         info={info}
       />
 
-      <h2 className="total-text">
-        Total $ spent: <span>${info.total.toFixed(2)}</span>
-      </h2>
+      <Summary total={info.total} expenses={info.expenses} />
 
-      <BreakDown info={info} />
+      {/* <BreakDown info={info} /> */}
     </div>
   );
 };

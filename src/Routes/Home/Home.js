@@ -5,7 +5,6 @@ import { collection, query } from "firebase/firestore";
 import { useRecoilState } from "recoil";
 import { userIdAtom } from "../../Util/Atoms";
 import ExpenseInput from "../../Components/ExpenseInput/ExpenseInput";
-import BreakDown from "../../Components/Breakdown/Breakdown";
 import "./Home.scss";
 import Summary from "../../Components/Summary/Summary";
 
@@ -44,8 +43,6 @@ const Home = () => {
       />
 
       <Summary total={info.total} expenses={info.expenses} />
-
-      {/* <BreakDown info={info} /> */}
     </div>
   );
 };

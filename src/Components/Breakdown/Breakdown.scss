@@ -1,24 +1,11 @@
 .breakdown-container {
-  h2 {
-    text-align: center;
-    margin: 20px 0 20px;
-  }
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
-  .breakdown-list-container {
-    width: 300px;
-    margin: 0 auto;
-
-    h3 {
-      margin-left: 60px;
-    }
-
-    ul {
-      list-style-type: none;
-      margin-left: 80px;
-
-      li {
-        color: green;
-      }
-    }
+  li {
+    color: green;
+    margin: 10px 20px;
   }
 }

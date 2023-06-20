@@ -37,7 +37,7 @@ const Summary = ({ total, expenses }) => {
                         {(state) => {
                           return (
                             <AccordianArrow
-                              flip={state.expanded ? true : false}
+                              flip={state.expanded ? "true" : "false"}
                             />
                           );
                         }}

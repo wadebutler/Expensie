@@ -7,8 +7,11 @@ import { userIdAtom } from "../../Util/Atoms";
 import ExpenseInput from "../../Components/ExpenseInput/ExpenseInput";
 import "./Home.scss";
 import Summary from "../../Components/Summary/Summary";
+import { displayModalAtom } from "../../Util/Atoms";
+import Modal from "../../Components/Modal/Modal";
 
 const Home = () => {
+  const [displayModal, setDisplayModal] = useRecoilState(displayModalAtom);
   const [userId, setUserId] = useRecoilState(userIdAtom);
   const [info, setInfo] = useState(null);
   const firestore = useFirestore();
@@ -29,21 +32,26 @@ const Home = () => {
   return status === "loading" || info === null ? (
     <div className="loading-text">Loading...</div>
   ) : (
-    <div className="app-container">
-      <button className="logout-button" onClick={() => handleLogout()}>
-        Logout
-      </button>
-      <h1>Expensie</h1>
+    <>
+      {displayModal ? (
+        <Modal userId={userId} docId={info["NO_ID_FIELD"]} info={info} />
+      ) : null}
+      <div className="app-container">
+        <button className="logout-button" onClick={() => handleLogout()}>
+          Logout
+        </button>
+        <h1>Expensie</h1>
 
-      <ExpenseInput
-        categories={info.categories}
-        userId={userId}
-        docId={info["NO_ID_FIELD"]}
-        info={info}
-      />
+        <ExpenseInput
+          categories={info.categories}
+          userId={userId}
+          docId={info["NO_ID_FIELD"]}
+          info={info}
+        />
 
-      <Summary total={info.total} expenses={info.expenses} />
-    </div>
+        <Summary total={info.total} expenses={info.expenses} />
+      </div>
+    </>
   );
 };
 

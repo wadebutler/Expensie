@@ -3,8 +3,11 @@ import Select from "react-select";
 import "./ExpenseInput.scss";
 import { useFirestore } from "reactfire";
 import { setDoc, doc } from "firebase/firestore";
+import { displayModalAtom } from "../../Util/Atoms";
+import { useRecoilState } from "recoil";
 
 const ExpenseInput = ({ categories, userId, docId, info }) => {
+  const [displayModal, setDisplayModal] = useRecoilState(displayModalAtom);
   const [dollarValue, setDollarValue] = useState("");
   const [category, setCategory] = useState("");
   const firestore = useFirestore();
@@ -35,13 +38,22 @@ const ExpenseInput = ({ categories, userId, docId, info }) => {
           />
         </div>
 
-        <Select
-          styles={selectStyle}
-          className="category-select"
-          placeholder={"Select Category"}
-          options={categories}
-          onChange={(value) => setCategory(value)}
-        />
+        <div className="category-input-container">
+          <Select
+            styles={selectStyle}
+            className="category-select"
+            placeholder={"Select Category"}
+            options={categories}
+            onChange={(value) => setCategory(value)}
+          />
+
+          <button
+            className="category-button"
+            onClick={() => setDisplayModal(true)}
+          >
+            +
+          </button>
+        </div>
       </div>
 
       <button
